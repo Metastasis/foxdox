@@ -50,7 +50,6 @@ export default function Asynchronous() {
   }, [term]);
   return (
     <Autocomplete
-      sx={{ width: 300 }}
       open={open}
       onOpen={() => {
         setOpen(Boolean(term));

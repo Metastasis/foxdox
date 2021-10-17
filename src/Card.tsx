@@ -6,9 +6,20 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function ImgMediaCard() {
+interface Props {
+  title: string
+}
+
+export default function ImgMediaCard(props: Props) {
+  const {title} = props;
   return (
-    <Card sx={{ maxWidth: 345, display: 'inline-block' }} variant="outlined">
+    <Card
+      variant="outlined"
+      sx={{
+        maxWidth: 345,
+        display: 'inline-block'
+      }}
+    >
       <CardMedia
         component="img"
         alt="placeholder"
@@ -16,8 +27,8 @@ export default function ImgMediaCard() {
         image="https://via.placeholder.com/350x150"
       />
       <CardContent>
-        <Typography gutterBottom variant="h5">
-          Lizard
+        <Typography gutterBottom noWrap variant="h5">
+          {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Lizards are a widespread group of squamate reptiles, with over 6,000

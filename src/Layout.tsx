@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {ReactNode, ReactNodeArray} from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 interface Props {
-  children: JSX.Element | JSX.Element[],
-  sidebar?: JSX.Element | null | undefined
+  children: ReactNode | ReactNodeArray,
+  sidebar?: ReactNode | ReactNodeArray
 }
 
 export default function BasicGrid(props: Props) {
