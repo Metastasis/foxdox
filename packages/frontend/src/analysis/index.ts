@@ -1,2 +1,4 @@
-export {handlers, analysisSchema} from './mock';
-export type {Analysis} from './mock';
+export {handlers} from './mock';
+export {analysisSchema} from './schema';
+export {search} from './api';
+export type {Analysis} from './schema';

@@ -1,4 +1,5 @@
 import React from 'react';
+import {useQuery} from 'react-query';
 import Container from '@mui/material/Container';
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
@@ -6,7 +7,7 @@ import Box from "@mui/material/Box";
 import Layout from './components/Layout';
 import Card from './components/Card';
 import Autocomplete from './components/Autocomplete';
-import {Analysis} from './analysis';
+import {search} from './analysis';
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -17,7 +18,7 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 function App() {
-  const analysisItems: Analysis[] = [];
+  const searchApi = useQuery('analysisItems', () => search({}));
   return (
     <Container
       fixed
@@ -36,7 +37,7 @@ function App() {
             }
           }}
         >
-          {analysisItems.map(
+          {searchApi.status === 'success' && searchApi.data.map(
             analysis => <Card key={analysis.id} title={analysis.title} />
           )}
         </Box>

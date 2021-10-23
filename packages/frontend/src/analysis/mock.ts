@@ -1,33 +1,25 @@
 import {rest} from 'msw';
-import {z} from 'zod';
+import {searchParamsSchema} from './schema';
 
 
-export const analysisSchema = z.object({
-  id: z.string().uuid(),
-  title: z.string().nonempty(),
-  bioMaterialExtractionDate: z.date()
-});
-export type Analysis = z.infer<typeof analysisSchema>;
-const searchParamsSchema = z.object({
-  title: z.string().nonempty()
-});
 const analysisItems = [
   {
-    id: '1',
+    id: '9b765264-caf8-46b8-a81a-bc463b69de20',
     title: 'Биохимические исследования',
     bioMaterialExtractionDate: new Date('2020-09-08')
   },
   {
-    id: '2',
+    id: '3b7e8f2b-48f4-471c-8516-fc2f5a35044a',
     title: 'Метаболиты',
     bioMaterialExtractionDate: new Date('2020-09-07')
   },
   {
-    id: '3',
+    id: '3144bc38-2e09-4ce6-8d1a-8a7a42d0bd3e',
     title: 'Гормоны, метаболиты, специфические белки',
     bioMaterialExtractionDate: new Date('2020-09-06')
   }
 ];
+
 export const handlers = [
   rest.post('/analysis/search', (req, res, ctx) => {
     const maybeBody = searchParamsSchema.safeParse(req.body);
@@ -37,10 +29,11 @@ export const handlers = [
         ctx.json({error: maybeBody.error})
       );
     }
-    const items = analysisItems.filter(
-      item => item.title.indexOf(maybeBody.data.title.trim().toLowerCase()) >= 0
-    );
-    items.sort((a, b) => Number(a.bioMaterialExtractionDate) - Number(b.bioMaterialExtractionDate));
+    const searchTerm = maybeBody.data.title?.trim()?.toLowerCase();
+    const items = searchTerm ? analysisItems.filter(
+      item => item.title.indexOf(searchTerm) >= 0
+    ) : analysisItems;
+    items.sort((a, b) => Number(b.bioMaterialExtractionDate) - Number(a.bioMaterialExtractionDate));
     return res(
       ctx.status(200),
       ctx.json({
