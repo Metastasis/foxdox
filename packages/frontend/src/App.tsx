@@ -3,9 +3,9 @@ import Container from '@mui/material/Container';
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Layout from './Layout';
-import Card from './Card';
-import Autocomplete from './Autocomplete';
+import Layout from './components/Layout';
+import Card from './components/Card';
+import Autocomplete from './components/Autocomplete';
 
 
 const Item = styled(Paper)(({theme}) => ({
