@@ -2,6 +2,7 @@ import React, {ReactNode, ReactNodeArray} from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
+
 interface Props {
   children: ReactNode | ReactNodeArray,
   sidebar?: ReactNode | ReactNodeArray
