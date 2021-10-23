@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Layout from './components/Layout';
 import Card from './components/Card';
 import Autocomplete from './components/Autocomplete';
+import {Analysis} from './analysis';
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -15,25 +16,8 @@ const Item = styled(Paper)(({theme}) => ({
   color: theme.palette.text.secondary,
 }));
 
-const analysisItems = [
-  {
-    id: '1',
-    title: 'Биохимические исследования',
-    bioMaterialExtractionDate: new Date('2020-09-08')
-  },
-  {
-    id: '2',
-    title: 'Метаболиты',
-    bioMaterialExtractionDate: new Date('2020-09-08')
-  },
-  {
-    id: '3',
-    title: 'Гормоны, метаболиты, специфические белки',
-    bioMaterialExtractionDate: new Date('2020-09-08')
-  }
-];
-
 function App() {
+  const analysisItems: Analysis[] = [];
   return (
     <Container
       fixed
