@@ -1,14 +1,19 @@
 {
   "name": "@foxdox/root",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@nestjs/cli": "^8.1.4",
+    "lerna": "^4.0.0",
+    "npm-run-all": "^4.1.5"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "start": "lerna exec -- npm run start"
-  }
+    "start": "npm-run-all --parallel start:*",
+    "start:frontend": "lerna exec --scope @foxdox/frontend -- npm run start",
+    "start:backend": "lerna exec --scope @foxdox/backend -- npm run start"
+  },
+  "author": "metastasis@protonmail.ch",
+  "private": true,
+  "license": "MIT"
 }
