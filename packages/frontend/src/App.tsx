@@ -1,9 +1,9 @@
 import React from 'react';
 import {useQuery} from 'react-query';
 import Container from '@mui/material/Container';
-import {styled} from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import {styled} from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
 import Layout from './components/Layout';
 import Card from './components/Card';
 import Autocomplete from './components/Autocomplete';
@@ -17,6 +17,10 @@ const Item = styled(Paper)(({theme}) => ({
   color: theme.palette.text.secondary,
 }));
 
+function Sidebar() {
+  return <Item>xs=4</Item>;
+}
+
 function App() {
   const searchApi = useQuery('analysisItems', () => search({}));
   return (
@@ -27,7 +31,7 @@ function App() {
         marginTop: (theme) => theme.spacing(2)
       }}
     >
-      <Layout sidebar={<Item>xs=4</Item>}>
+      <Layout sidebar={<Sidebar />}>
         <Autocomplete />
         <Box
           sx={{
@@ -38,7 +42,14 @@ function App() {
           }}
         >
           {searchApi.status === 'success' && searchApi.data.map(
-            analysis => <Card key={analysis.id} title={analysis.title} />
+            analysis => (
+              <Card
+                key={analysis.id}
+                title={analysis.title}
+                extractionDate={analysis.bioMaterialExtractionDate}
+                files={analysis.files}
+              />
+            )
           )}
         </Box>
       </Layout>

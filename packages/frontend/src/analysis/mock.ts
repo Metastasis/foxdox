@@ -1,22 +1,41 @@
 import {rest} from 'msw';
 import {searchParamsSchema} from './schema';
+// @ts-ignore
+import biochemistry from './__mock__/simple.pdf';
 
+const files = {
+  biochemistry: {
+    fileId: '1b100000-caf1-10b1-a10a-bc100b10de10',
+    fileUrl: biochemistry,
+    fileType: 'application/pdf',
+    fileName: 'simple.pdf'
+  }
+};
 
 const analysisItems = [
   {
     id: '9b765264-caf8-46b8-a81a-bc463b69de20',
     title: 'Биохимические исследования',
-    bioMaterialExtractionDate: new Date('2020-09-08')
+    bioMaterialExtractionDate: new Date('2020-09-08'),
+    files: [
+      {
+        fileId: files.biochemistry.fileId,
+        fileType: files.biochemistry.fileType,
+        fileName: files.biochemistry.fileName
+      }
+    ]
   },
   {
     id: '3b7e8f2b-48f4-471c-8516-fc2f5a35044a',
     title: 'Метаболиты',
-    bioMaterialExtractionDate: new Date('2020-09-07')
+    bioMaterialExtractionDate: new Date('2020-09-07'),
+    files: []
   },
   {
     id: '3144bc38-2e09-4ce6-8d1a-8a7a42d0bd3e',
     title: 'Гормоны, метаболиты, специфические белки',
-    bioMaterialExtractionDate: new Date('2020-09-06')
+    bioMaterialExtractionDate: new Date('2020-09-06'),
+    files: []
   }
 ];
 
@@ -41,4 +60,32 @@ export const handlers = [
       }),
     );
   }),
+  rest.post('/analysis/download', async (req, res, ctx) => {
+    const fileId = (req.body as any).fileId;
+    const file = Object.values(files).find(file => file.fileId === fileId);
+    if (!file) {
+      return res(ctx.status(200), ctx.json(req.body));
+    }
+    const buf = await fetch(file.fileUrl).then(r => r.arrayBuffer());
+    return res(
+      ctx.set('Content-Length', buf.byteLength.toString()),
+      ctx.set('Content-Disposition', `attachment; filename*="${file.fileName}"`),
+      ctx.set('Content-Type', file.fileType),
+      ctx.body(buf)
+    );
+  }),
+  rest.post('/documents/download', async (req, res, ctx) => {
+    const [, fileId] = (req.body as any).split('=');
+    const file = Object.values(files).find(file => file.fileId === fileId);
+    if (!file) {
+      return res(ctx.status(200), ctx.json(req.body));
+    }
+    const buf = await fetch(file.fileUrl).then(r => r.arrayBuffer());
+    return res(
+      ctx.set('Content-Length', buf.byteLength.toString()),
+      ctx.set('Content-Disposition', `attachment; filename*="${file.fileName}"`),
+      ctx.set('Content-Type', file.fileType),
+      ctx.body(buf)
+    );
+  })
 ];

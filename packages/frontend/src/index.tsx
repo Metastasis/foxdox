@@ -4,7 +4,13 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import {ReactQueryDevtools} from 'react-query/devtools';
 import CssBaseline from '@mui/material/CssBaseline';
 import {ThemeProvider} from '@mui/material/styles';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
 import App from './App';
+import {Download} from './analysis';
 import theme from './theme';
 import reportWebVitals from './reportWebVitals';
 
@@ -30,9 +36,20 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {HAS_REACT_QUERY && <ReactQueryDevtools />}
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <Router>
+        <Switch>
+          <Route path="/analysis/download/:fileId">
+            <React.StrictMode>
+              <Download />
+            </React.StrictMode>
+          </Route>
+          <Route path="/">
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </Route>
+        </Switch>
+      </Router>
     </ThemeProvider>
   </QueryClientProvider>,
   document.getElementById('root')
