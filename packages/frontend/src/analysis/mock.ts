@@ -73,19 +73,5 @@ export const handlers = [
       ctx.set('Content-Type', file.fileType),
       ctx.body(buf)
     );
-  }),
-  rest.post('/documents/download', async (req, res, ctx) => {
-    const [, fileId] = (req.body as any).split('=');
-    const file = Object.values(files).find(file => file.fileId === fileId);
-    if (!file) {
-      return res(ctx.status(200), ctx.json(req.body));
-    }
-    const buf = await fetch(file.fileUrl).then(r => r.arrayBuffer());
-    return res(
-      ctx.set('Content-Length', buf.byteLength.toString()),
-      ctx.set('Content-Disposition', `attachment; filename*="${file.fileName}"`),
-      ctx.set('Content-Type', file.fileType),
-      ctx.body(buf)
-    );
   })
 ];

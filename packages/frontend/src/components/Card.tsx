@@ -1,10 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
 interface File {
@@ -44,15 +45,15 @@ export default function ImgMediaCard(props: Props) {
       <CardActions>
         <Button size="small">Подробнее</Button>
         {files.map(file => (
-          <Button
-            component={Link}
+          <Link
             key={file.fileId}
+            component={RouterLink}
             to={`/analysis/download/${file.fileId}`}
             target="_blank"
             rel="noopener noreferrer"
           >
             {file.fileName}
-          </Button>
+          </Link>
         ))}
       </CardActions>
     </Card>

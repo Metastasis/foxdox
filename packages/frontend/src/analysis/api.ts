@@ -1,5 +1,10 @@
 import axios from 'axios';
-import {analysisItemsSchema, SearchParams} from './schema';
+import {
+  analysisItemsSchema,
+  DownloadLinkParams,
+  fileParamsSchema,
+  SearchParams
+} from './schema';
 
 
 export function search(params: SearchParams) {
@@ -39,21 +44,17 @@ export default function downloadViaPost(
   body.removeChild(form);
 }
 
-export function downloadViaFormFile(
-  params: { [key: string]: any }
-) {
-  downloadViaPost(
-    '/documents/download',
-    params
-  );
+export function downloadViaFormFile(params: {[key: string]: any}) {
+  downloadViaPost('/documents/download', params);
   return Promise.resolve();
 }
 
-export function downloadViaLink(params: any) {
-  return axios.post('/analysis/download', params, {responseType: 'blob'})
+export function downloadViaLink(params: DownloadLinkParams) {
+  const payload = fileParamsSchema.parse(params);
+  return axios.post('/analysis/download', payload, {responseType: 'blob'})
     .then(response => {
-      const fileName = response.headers['content-disposition'].split('"')[1] || `file-${Date.now()}`;
-      const options = {type: response.headers['content-type']};
+      const fileName = response.headers['content-disposition']?.split('"')[1] || `file-${Date.now()}`;
+      const options = {type: response.headers['content-type'] || 'application/octet-stream'};
       const url = window.URL.createObjectURL(new File([response.data as Blob], fileName, options));
       const link = document.createElement('a');
       link.href = url;

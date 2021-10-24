@@ -19,3 +19,8 @@ export const searchParamsSchema = z.object({
   title: z.string().optional()
 });
 export type SearchParams = z.infer<typeof searchParamsSchema>;
+
+export const fileParamsSchema = z.object({
+  fileId: z.string().uuid(),
+});
+export type DownloadLinkParams = z.infer<typeof fileParamsSchema>;
