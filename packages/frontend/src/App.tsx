@@ -1,13 +1,15 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import {useQuery} from 'react-query';
 import Container from '@mui/material/Container';
 import {styled} from '@mui/material/styles';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Layout from './components/Layout';
 import Card from './components/Card';
 import Autocomplete from './components/Autocomplete';
-import {search} from './analysis';
+import {search, create} from './analysis';
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -22,7 +24,13 @@ function Sidebar() {
 }
 
 function App() {
+  const history = useHistory();
   const searchApi = useQuery('analysisItems', () => search({}));
+  const onCreateAnalysis = React.useCallback(() => {
+    create().then(analysis => {
+      history.push(`/analysis/${analysis.id}`);
+    })
+  }, [history]);
   return (
     <Container
       fixed
@@ -32,6 +40,18 @@ function App() {
       }}
     >
       <Layout sidebar={<Sidebar />}>
+        <Box
+          sx={{
+            marginBottom: (theme) => theme.spacing(1)
+          }}
+        >
+          <Button
+            onClick={onCreateAnalysis}
+            variant="contained"
+          >
+            Добавить анализ
+          </Button>
+        </Box>
         <Autocomplete />
         <Box
           sx={{
@@ -41,7 +61,7 @@ function App() {
             }
           }}
         >
-          {searchApi.status === 'success' && searchApi.data.map(
+          {searchApi.status === 'success' && Array.isArray(searchApi.data) && searchApi.data.map(
             analysis => (
               <Card
                 key={analysis.id}

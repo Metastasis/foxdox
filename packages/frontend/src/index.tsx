@@ -10,7 +10,7 @@ import {
   Route
 } from 'react-router-dom';
 import App from './App';
-import {Download} from './analysis';
+import {Download, AnalysisView} from './analysis';
 import theme from './theme';
 import reportWebVitals from './reportWebVitals';
 
@@ -41,6 +41,11 @@ ReactDOM.render(
           <Route path="/analysis/download/:fileId">
             <React.StrictMode>
               <Download />
+            </React.StrictMode>
+          </Route>
+          <Route path="/analysis/:id">
+            <React.StrictMode>
+              <AnalysisView />
             </React.StrictMode>
           </Route>
           <Route path="/">

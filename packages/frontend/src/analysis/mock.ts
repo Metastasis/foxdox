@@ -1,7 +1,9 @@
 import {rest} from 'msw';
-import {searchParamsSchema} from './schema';
+import {Analysis, analysisSchema, searchParamsSchema} from './schema';
+import {generateMock} from '@anatine/zod-mock';
 // @ts-ignore
 import biochemistry from './__mock__/simple.pdf';
+
 
 const files = {
   biochemistry: {
@@ -12,7 +14,7 @@ const files = {
   }
 };
 
-const analysisItems = [
+let analysisItems: Analysis[] = [
   {
     id: '9b765264-caf8-46b8-a81a-bc463b69de20',
     title: 'Биохимические исследования',
@@ -48,6 +50,11 @@ export const handlers = [
         ctx.json({error: maybeBody.error})
       );
     }
+    const analysisId = maybeBody.data.id?.trim()?.toLowerCase();
+    if (analysisId) {
+      const analysis = analysisItems.find(i => i.id === analysisId);
+      return analysis ? res(ctx.json(analysis)) : res(ctx.status(404));
+    }
     const searchTerm = maybeBody.data.title?.trim()?.toLowerCase();
     const items = searchTerm ? analysisItems.filter(
       item => item.title.indexOf(searchTerm) >= 0
@@ -72,6 +79,28 @@ export const handlers = [
       ctx.set('Content-Disposition', `attachment; filename*="${file.fileName}"`),
       ctx.set('Content-Type', file.fileType),
       ctx.body(buf)
+    );
+  }),
+  rest.post('/analysis/create', async (req, res, ctx) => {
+    const analysis = generateMock(analysisSchema);
+    analysis.files = [];
+    analysisItems.push(analysis);
+    return res(
+      ctx.json(analysis)
+    );
+  }),
+  rest.post('/analysis/update', async (req, res, ctx) => {
+    const nextAnalysis = analysisSchema.parse(req.body);
+    analysisItems = analysisItems.reduce((acc, item) => {
+      if (item.id === nextAnalysis.id) {
+        acc.push(nextAnalysis);
+        return acc;
+      }
+      acc.push(item);
+      return acc;
+    }, [] as Analysis[]);
+    return res(
+      ctx.json(nextAnalysis)
     );
   })
 ];

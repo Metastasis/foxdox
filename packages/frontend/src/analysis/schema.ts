@@ -12,11 +12,15 @@ export const analysisSchema = z.object({
   bioMaterialExtractionDate: z.preprocess((val) => typeof val === 'string' ? new Date(val) : val, z.date()),
   files: z.array(fileSchema)
 });
+export const analysisCreateSchema = z.object({
+  id: z.string().uuid(),
+});
 export const analysisItemsSchema = z.array(analysisSchema);
 export type Analysis = z.infer<typeof analysisSchema>;
 
 export const searchParamsSchema = z.object({
-  title: z.string().optional()
+  title: z.string().optional(),
+  id: z.string().optional()
 });
 export type SearchParams = z.infer<typeof searchParamsSchema>;
 

@@ -1,16 +1,21 @@
 import axios from 'axios';
 import {
+  analysisCreateSchema,
   analysisItemsSchema,
+  analysisSchema,
   DownloadLinkParams,
   fileParamsSchema,
-  SearchParams
+  SearchParams,
+  Analysis
 } from './schema';
 
 
 export function search(params: SearchParams) {
   return axios.post('/analysis/search', params)
     .then(res => {
-      return analysisItemsSchema.parse((res.data as any).items);
+      return params.id
+        ? analysisCreateSchema.parse((res.data as any))
+        : analysisItemsSchema.parse((res.data as any).items);
     });
 }
 
@@ -64,5 +69,20 @@ export function downloadViaLink(params: DownloadLinkParams) {
       // @ts-ignore
       link.parentNode.removeChild(link);
       window.URL.revokeObjectURL(url);
+    });
+}
+
+export function create() {
+  return axios.post('/analysis/create')
+    .then(res => {
+      return analysisCreateSchema.parse(res.data as any);
+    });
+}
+
+export function update(nextAnalysis: Analysis) {
+  const updated = analysisSchema.parse(nextAnalysis)
+  return axios.post('/analysis/update', updated)
+    .then(res => {
+      return analysisSchema.parse(res.data as any);
     });
 }
