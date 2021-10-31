@@ -43,6 +43,11 @@ ReactDOM.render(
               <Download />
             </React.StrictMode>
           </Route>
+          <Route path="/analysis/new">
+            <React.StrictMode>
+              <AnalysisView />
+            </React.StrictMode>
+          </Route>
           <Route path="/analysis/:id">
             <React.StrictMode>
               <AnalysisView />

@@ -1,50 +1,72 @@
 import React from 'react';
-import {useParams} from 'react-router-dom';
-import {useQuery} from 'react-query';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import ruLocale from 'date-fns/locale/ru';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DatePicker from '@mui/lab/DatePicker';
 import Layout from '../components/Layout';
-import {search} from './api';
-import {Analysis as TAnalysis} from './schema';
 
 
 export default function Analysis() {
-  const params = useParams<{id: string}>();
-  const response = useQuery(['analysisItem', params.id], () => search(params));
-  if (response.status !== 'success') return null;
-  const analysis = (response.data as unknown) as TAnalysis;
+  const [value, setValue] = React.useState(null);
   return (
     <Container
       fixed
       maxWidth="lg"
       sx={{
-        marginTop: (theme) => theme.spacing(2)
+        marginTop: (theme) => theme.spacing(1)
       }}
     >
       <Layout>
-        <Card
-          variant="outlined"
+        <Typography variant="h3">
+          Новый анализ
+        </Typography>
+        <FormControl
+          fullWidth
         >
-          <CardContent>
-            <Typography gutterBottom noWrap variant="h5">
-              {analysis.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Дата взятия материала: {formatDate(analysis.bioMaterialExtractionDate)}
-            </Typography>
-          </CardContent>
-        </Card>
+          <TextField
+            required
+            name="title"
+            label="Анализ"
+            size="medium"
+            sx={{
+              marginTop: (theme) => theme.spacing(2)
+            }}
+          />
+          <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
+            <DatePicker
+              label="Дата сдачи"
+              mask="__.__.____"
+              value={value}
+              onChange={(newValue) => setValue(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  size="medium"
+                  sx={{
+                    marginTop: (theme) => theme.spacing(2)
+                  }}
+                />
+              )}
+            />
+          </LocalizationProvider>
+          <Button
+            variant="contained"
+            sx={{
+              maxWidth: '200px',
+              marginTop: (theme) => theme.spacing(2),
+              marginLeft: 'auto'
+            }}
+          >
+            Создать
+          </Button>
+        </FormControl>
       </Layout>
     </Container>
   );
-}
-
-function formatDate(date?: Date) {
-  if (!date) return '';
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth()).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
 }

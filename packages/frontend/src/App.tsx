@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Layout from './components/Layout';
 import Card from './components/Card';
 import Autocomplete from './components/Autocomplete';
-import {search, create} from './analysis';
+import {search} from './analysis';
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -27,9 +27,7 @@ function App() {
   const history = useHistory();
   const searchApi = useQuery('analysisItems', () => search({}));
   const onCreateAnalysis = React.useCallback(() => {
-    create().then(analysis => {
-      history.push(`/analysis/${analysis.id}`);
-    })
+    history.push(`/analysis/new`);
   }, [history]);
   return (
     <Container
