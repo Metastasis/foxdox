@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import ruLocale from 'date-fns/locale/ru';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -13,6 +14,9 @@ import Layout from '../components/Layout';
 
 export default function Analysis() {
   const [value, setValue] = React.useState(null);
+  const onUpload = React.useCallback((e) => {
+    console.log(e.target.files)
+  }, [])
   return (
     <Container
       fixed
@@ -23,7 +27,7 @@ export default function Analysis() {
     >
       <Layout>
         <Typography variant="h3">
-          Новый анализ
+          Добавление анализа
         </Typography>
         <FormControl
           fullWidth
@@ -55,6 +59,28 @@ export default function Analysis() {
               )}
             />
           </LocalizationProvider>
+          <Box
+            sx={{
+              marginTop: (theme) => theme.spacing(2)
+            }}
+          >
+            <input
+              accept="image/jpg,image/jpeg,image/png,application/pdf"
+              style={{ display: 'none' }}
+              id="raised-button-file"
+              multiple
+              type="file"
+              onChange={onUpload}
+            />
+            <label htmlFor="raised-button-file">
+              <Button
+                variant="outlined"
+                component="span"
+              >
+                Загрузить файл
+              </Button>
+            </label>
+          </Box>
           <Button
             variant="contained"
             sx={{

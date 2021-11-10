@@ -1,6 +1,7 @@
 import {rest} from 'msw';
 import {Analysis, analysisSchema, searchParamsSchema} from './schema';
 import {generateMock} from '@anatine/zod-mock';
+import faker from 'faker';
 // @ts-ignore
 import biochemistry from './__mock__/simple.pdf';
 
@@ -102,5 +103,13 @@ export const handlers = [
     return res(
       ctx.json(nextAnalysis)
     );
+  }),
+  rest.post('/analysis/upload-file', async (req, res, ctx) => {
+    console.log(111, req.body);
+    return res(
+      ctx.json({
+        id: faker.datatype.uuid()
+      })
+    )
   })
 ];

@@ -1,12 +1,12 @@
 import axios from 'axios';
 import {
+  Analysis,
   analysisCreateSchema,
   analysisItemsSchema,
   analysisSchema,
   DownloadLinkParams,
   fileParamsSchema,
-  SearchParams,
-  Analysis
+  SearchParams
 } from './schema';
 
 
@@ -80,9 +80,19 @@ export function create() {
 }
 
 export function update(nextAnalysis: Analysis) {
-  const updated = analysisSchema.parse(nextAnalysis)
+  const updated = analysisSchema.parse(nextAnalysis);
   return axios.post('/analysis/update', updated)
     .then(res => {
       return analysisSchema.parse(res.data as any);
     });
+}
+
+export function upload(file: any) {
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+  };
+  const formData = new FormData();
+  formData.append('file', file);
+  return axios.post('/analysis/upload-file', formData, {headers})
+    .then(r => r.data);
 }
