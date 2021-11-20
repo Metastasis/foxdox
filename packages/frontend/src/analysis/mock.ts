@@ -1,6 +1,5 @@
 import {rest} from 'msw';
 import {Analysis, analysisSchema, searchParamsSchema} from './schema';
-import {generateMock} from '@anatine/zod-mock';
 import faker from 'faker';
 // @ts-ignore
 import biochemistry from './__mock__/simple.pdf';
@@ -83,8 +82,15 @@ export const handlers = [
     );
   }),
   rest.post('/analysis/create', async (req, res, ctx) => {
-    const analysis = generateMock(analysisSchema);
-    analysis.files = [];
+    if (typeof req.body !== 'object') {
+      return res(ctx.status(400));
+    }
+    const analysis = {
+      id: faker.datatype.uuid(),
+      title: req.body.title as string,
+      bioMaterialExtractionDate: req.body.bioMaterialExtractionDate as Date,
+      files: req.body.files
+    };
     analysisItems.push(analysis);
     return res(
       ctx.json(analysis)
@@ -105,10 +111,14 @@ export const handlers = [
     );
   }),
   rest.post('/analysis/upload-file', async (req, res, ctx) => {
-    console.log(111, req.body);
+    if (typeof req.body !== 'object' || !req.body) {
+      return res(ctx.status(400));
+    }
     return res(
       ctx.json({
-        id: faker.datatype.uuid()
+        fileId: faker.datatype.uuid(),
+        fileName: req.body.file.name,
+        fileType: req.body.file.type
       })
     )
   })

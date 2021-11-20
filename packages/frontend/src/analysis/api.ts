@@ -14,7 +14,7 @@ export function search(params: SearchParams) {
   return axios.post('/analysis/search', params)
     .then(res => {
       return params.id
-        ? analysisCreateSchema.parse((res.data as any))
+        ? analysisSchema.parse((res.data as any))
         : analysisItemsSchema.parse((res.data as any).items);
     });
 }
@@ -72,8 +72,8 @@ export function downloadViaLink(params: DownloadLinkParams) {
     });
 }
 
-export function create() {
-  return axios.post('/analysis/create')
+export function create(newAnalysis: any) {
+  return axios.post('/analysis/create', newAnalysis)
     .then(res => {
       return analysisCreateSchema.parse(res.data as any);
     });

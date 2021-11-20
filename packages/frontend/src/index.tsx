@@ -10,7 +10,7 @@ import {
   Route
 } from 'react-router-dom';
 import App from './App';
-import {Download, AnalysisView} from './analysis';
+import {Download, AnalysisView, AnalysisCreate} from './analysis';
 import theme from './theme';
 import reportWebVitals from './reportWebVitals';
 
@@ -45,7 +45,7 @@ ReactDOM.render(
           </Route>
           <Route path="/analysis/new">
             <React.StrictMode>
-              <AnalysisView />
+              <AnalysisCreate />
             </React.StrictMode>
           </Route>
           <Route path="/analysis/:id">
