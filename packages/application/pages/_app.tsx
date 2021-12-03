@@ -6,6 +6,8 @@ import theme from '../theme';
 import type { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import {ReactComponentLike} from 'prop-types';
+import Head from 'next/head';
+import '../mocks/browser';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement, sidebar: ReactElement) => ReactNode,
@@ -16,20 +18,25 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const __DEV__ = process.env.NODE_ENV === 'development';
-if (__DEV__) {
-  const {worker} = require('./mocks/browser');
-  worker.start({onUnhandledRequest: 'bypass'});
-}
-
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? getDefaultLayout;
   const SidebarComponent = Component.sidebarComponent ?? Sidebar;
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {getLayout(<Component {...pageProps} />, <SidebarComponent />)}
-    </ThemeProvider>
+    <>
+      <Head>
+        <title>Foxdox</title>
+        <meta name="description" content="Храни все анализы в одном месте, просто и удобно" />
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter&display=optional"
+          rel="stylesheet"
+        />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {getLayout(<Component {...pageProps} />, <SidebarComponent />)}
+      </ThemeProvider>
+    </>
   );
 }
 

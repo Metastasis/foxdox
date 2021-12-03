@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router'
-import {Download} from '../../../analysis';
+import { useRouter } from 'next/router';
+import {AnalysisDownload} from '../../../analysis';
 
 export default function DownloadPage() {
   const router = useRouter();
-  return <Download fileId={String(router.query.fileId || '')} />;
+  return <AnalysisDownload fileId={String(router.query.fileId || '')} />;
 }

@@ -2,9 +2,9 @@ import {rest} from 'msw';
 import {Analysis, analysisSchema, searchParamsSchema} from './schema';
 import faker from 'faker';
 // @ts-ignore
-import biochemistry from './__mock__/simple.pdf';
+// import biochemistry from '../public/__mock__/simple.pdf';
 
-
+const biochemistry = '/__mock__/simple.pdf';
 const files = {
   biochemistry: {
     fileId: '1b100000-caf1-10b1-a10a-bc100b10de10',

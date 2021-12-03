@@ -1,9 +1,9 @@
 import type {NextPage} from 'next';
-import {AnalysisList} from '../analysis';
+import {AnalysisCreate} from '../../analysis';
 
 
 const Page: NextPage = () => {
-  return <AnalysisList />;
+  return <AnalysisCreate />;
 };
 
 export default Page;
