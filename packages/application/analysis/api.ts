@@ -15,7 +15,7 @@ export function search(params: SearchParams) {
     .then(res => {
       return params.id
         ? analysisSchema.parse((res.data as any))
-        : analysisItemsSchema.parse((res.data as any).items);
+        : analysisItemsSchema.parse((res.data as any));
     });
 }
 

@@ -22,10 +22,10 @@ export class Analysis {
   @Prop()
   files: Array<{ fileId: string }>;
 
-  @Prop()
+  @Prop({ type: Date })
   createdAt: DateTimeISO;
 
-  @Prop()
+  @Prop({ type: Date })
   updatedAt: DateTimeISO;
 }
 
