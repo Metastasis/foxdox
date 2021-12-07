@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
-export type DateTimeIso = Date;
+export type DateTimeISO = string;
 export type Uuidv4 = string;
 export type AnalysisDocument = Analysis & Document;
 
@@ -21,6 +21,12 @@ export class Analysis {
 
   @Prop()
   files: Array<{ fileId: string }>;
+
+  @Prop()
+  createdAt: DateTimeISO;
+
+  @Prop()
+  updatedAt: DateTimeISO;
 }
 
 export const AnalysisSchema = SchemaFactory.createForClass(Analysis);

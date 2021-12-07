@@ -26,29 +26,30 @@ export class AnalyzesService {
     return this.analysisModel
       .find(params)
       .limit(20)
+      .sort({ createdAt: -1 })
       .then((results) => {
-        if (results.length === 1) {
+        if (searchDto.id && results.length === 1) {
           return FrontAnalysisDto.toFront(results[0]);
         }
         return results.map(FrontAnalysisDto.toFront);
       });
   }
 
-  async findOne(id: Uuidv4): Promise<Analysis | null> {
+  async findOne(id: Uuidv4): Promise<FrontAnalysisDto | null> {
     const analysis = await this.analysisModel.findById(id);
-    return analysis || null;
+    return analysis ? FrontAnalysisDto.toFront(analysis) : null;
   }
 
   async update(
     id: Uuidv4,
     updateAnalysisDto: UpdateAnalysisDto,
-  ): Promise<Analysis | null> {
+  ): Promise<FrontAnalysisDto | null> {
     const analysis = await this.analysisModel.findOneAndUpdate(
       { _id: id },
       { $set: updateAnalysisDto },
     );
     if (!analysis) return null;
-    return analysis;
+    return FrontAnalysisDto.toFront(analysis);
   }
 
   remove(_id: Uuidv4): Promise<null> {
