@@ -10,9 +10,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "start": "npm-run-all --parallel start:*",
-    "start:frontend": "lerna exec --scope @foxdox/frontend -- npm run start",
-    "start:backend": "lerna exec --scope @foxdox/backend -- npm run start",
-    "start:application": "lerna exec --scope @foxdox/application -- npm run dev"
+    "start:backend": "lerna exec --scope @foxdox/backend -- npm run start:dev",
+    "start:frontend": "lerna exec --scope @foxdox/application -- npm run dev"
   },
   "author": "metastasis@protonmail.ch",
   "private": true,

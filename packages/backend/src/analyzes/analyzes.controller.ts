@@ -10,9 +10,10 @@ import {
 import { AnalyzesService } from './analyzes.service';
 import { CreateAnalysisDto } from './dto/create-analyze.dto';
 import { UpdateAnalysisDto } from './dto/update-analyze.dto';
+import { SearchDto } from './dto/search.dto';
 import { Uuidv4 } from './entities/analysis.entity';
 
-@Controller('analyzes')
+@Controller('/api/analysis')
 export class AnalyzesController {
   constructor(private readonly analyzesService: AnalyzesService) {}
 
@@ -21,9 +22,9 @@ export class AnalyzesController {
     return this.analyzesService.create(createAnalyzeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.analyzesService.findAll();
+  @Post('/search')
+  findAll(@Body() searchDto: SearchDto) {
+    return this.analyzesService.findAll(searchDto);
   }
 
   @Get(':id')

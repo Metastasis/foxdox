@@ -11,7 +11,7 @@ import {
 
 
 export function search(params: SearchParams) {
-  return axios.post('/analysis/search', params)
+  return axios.post('/api/analysis/search', params)
     .then(res => {
       return params.id
         ? analysisSchema.parse((res.data as any))
@@ -50,13 +50,13 @@ export default function downloadViaPost(
 }
 
 export function downloadViaFormFile(params: {[key: string]: any}) {
-  downloadViaPost('/documents/download', params);
+  downloadViaPost('/api/documents/download', params);
   return Promise.resolve();
 }
 
 export function downloadViaLink(params: DownloadLinkParams) {
   const payload = fileParamsSchema.parse(params);
-  return axios.post('/analysis/download', payload, {responseType: 'blob'})
+  return axios.post('/api/analysis/download', payload, {responseType: 'blob'})
     .then(response => {
       const fileName = response.headers['content-disposition']?.split('"')[1] || `file-${Date.now()}`;
       const options = {type: response.headers['content-type'] || 'application/octet-stream'};
@@ -73,7 +73,7 @@ export function downloadViaLink(params: DownloadLinkParams) {
 }
 
 export function create(newAnalysis: any) {
-  return axios.post('/analysis/create', newAnalysis)
+  return axios.post('/api/analysis', newAnalysis)
     .then(res => {
       return analysisCreateSchema.parse(res.data as any);
     });
@@ -81,7 +81,7 @@ export function create(newAnalysis: any) {
 
 export function update(nextAnalysis: Analysis) {
   const updated = analysisSchema.parse(nextAnalysis);
-  return axios.post('/analysis/update', updated)
+  return axios.patch('/api/analysis', updated)
     .then(res => {
       return analysisSchema.parse(res.data as any);
     });
@@ -93,6 +93,6 @@ export function upload(file: any) {
   };
   const formData = new FormData();
   formData.append('file', file);
-  return axios.post('/analysis/upload-file', formData, {headers})
+  return axios.post('/api/analysis/upload-file', formData, {headers})
     .then(r => r.data);
 }
