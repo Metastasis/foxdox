@@ -15,11 +15,12 @@ interface File {
 interface Props {
   title: string,
   extractionDate: Date,
-  files: File[]
+  files: File[],
+  onRedirect: () => void
 }
 
 export default function ImgMediaCard(props: Props) {
-  const {title, extractionDate, files} = props;
+  const {onRedirect, title, extractionDate, files} = props;
   return (
     <Card
       variant="outlined"
@@ -43,7 +44,7 @@ export default function ImgMediaCard(props: Props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Подробнее</Button>
+        <Button size="small" onClick={onRedirect}>Подробнее</Button>
         {files.map(file => (
           <MaterialLink
             key={file.fileId}

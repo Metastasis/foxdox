@@ -13,6 +13,7 @@ export default function AnalysisList() {
   const onCreateAnalysis = React.useCallback(() => {
     router.push(`/analysis/new`);
   }, [router]);
+  const onRedirect = (itemId: string) => router.push(`/analysis/${itemId}`);
   return (
     <>
       <Box
@@ -43,6 +44,7 @@ export default function AnalysisList() {
               title={analysis.title}
               extractionDate={analysis.bioMaterialExtractionDate}
               files={analysis.files}
+              onRedirect={() => onRedirect(analysis.id)}
             />
           )
         )}
