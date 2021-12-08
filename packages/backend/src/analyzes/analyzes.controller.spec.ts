@@ -12,7 +12,7 @@ describe('AnalyzesController', () => {
     files: [],
   };
   const mockAnalysis = {
-    _id: '1',
+    id: '1',
     title: 'The analysis',
     bioMaterialExtractionDate: new Date(Date.UTC(2021, 2, 10, 13, 0, 0, 0)),
     files: [],

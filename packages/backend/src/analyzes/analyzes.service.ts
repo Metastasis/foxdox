@@ -5,7 +5,8 @@ import { CreateAnalysisDto } from './dto/create-analyze.dto';
 import { UpdateAnalysisDto } from './dto/update-analyze.dto';
 import { FrontAnalysisDto } from './dto/front-analysis.dto';
 import { SearchDto } from './dto/search.dto';
-import { Analysis, AnalysisDocument, Uuidv4 } from './entities/analysis.entity';
+import { Uuidv4 } from './types';
+import { Analysis, AnalysisDocument } from './entities/analysis.entity';
 
 @Injectable()
 export class AnalyzesService {

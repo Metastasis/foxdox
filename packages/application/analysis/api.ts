@@ -24,7 +24,7 @@ export default function downloadViaPost(
   fields: any = {},
   {target}: any = {}
 ) {
-  const form = global.document.createElement('form');
+  const form = window.document.createElement('form');
   Object.assign(
     form,
     {action: url, method: 'POST'}
@@ -36,14 +36,14 @@ export default function downloadViaPost(
   );
   const keys = Object.keys(fields);
   for (let i = 0; i < keys.length; i++) {
-    const hidden = global.document.createElement('input');
+    const hidden = window.document.createElement('input');
     Object.assign(
       hidden,
       {type: 'hidden', name: keys[i], value: fields[keys[i]]}
     );
     form.appendChild(hidden);
   }
-  const body: HTMLElement = global.document.body;
+  const body: HTMLElement = window.document.body;
   body.appendChild(form);
   form.submit();
   body.removeChild(form);
@@ -87,12 +87,14 @@ export function update(nextAnalysis: Analysis) {
     });
 }
 
-export function upload(file: any) {
+export function upload(fields: {[field: string]: any}) {
   const headers = {
     'Content-Type': 'multipart/form-data'
   };
   const formData = new FormData();
-  formData.append('file', file);
-  return axios.post('/api/analysis/upload-file', formData, {headers})
+  Object.entries(fields).forEach(([field, value]) => {
+    formData.append(field, value);
+  });
+  return axios.post('/api/analysis/upload', formData, {headers})
     .then(r => r.data);
 }

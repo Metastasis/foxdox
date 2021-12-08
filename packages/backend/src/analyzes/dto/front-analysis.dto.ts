@@ -1,5 +1,6 @@
 import { CreateAnalysisDto } from './create-analyze.dto';
-import { Uuidv4, AnalysisDocument } from '../entities/analysis.entity';
+import { AnalysisDocument } from '../entities/analysis.entity';
+import { Uuidv4 } from '../types';
 
 export class FrontAnalysisDto extends CreateAnalysisDto {
   id: Uuidv4;

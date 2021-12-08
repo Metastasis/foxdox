@@ -19,7 +19,7 @@ export default function AnalysisCreate() {
   const [files, setFiles] = React.useState<Array<{status: string}>>([]);
   const onUpload = React.useCallback((e: ChangeEvent) => {
     const files = Array.from((e.target as HTMLInputElement).files || []);
-    const uploads = files.map(f => upload(f));
+    const uploads = files.map(file => upload({file}));
     Promise.allSettled<{}>(uploads).then(res => res.map(result => {
       const response = result.status === 'fulfilled' ? result.value : {};
       const status = result.status === 'fulfilled' ? 'success' : 'error';

@@ -3,23 +3,26 @@ import { Document } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 import { DateTimeISO } from '../types';
 
-export type AnalysisDocument = Analysis & Document;
+export type FileDocument = File & Document;
 
 @Schema({
   timestamps: true,
 })
-export class Analysis {
+export class File {
   @Prop({ type: String, default: uuidv4 })
   _id: string;
 
   @Prop({ type: String, required: true })
-  title: string;
+  fileName: string;
 
-  @Prop({ type: Date, required: true })
-  bioMaterialExtractionDate: Date;
+  @Prop({ type: String, required: true })
+  fileType: string;
 
-  @Prop()
-  files: Array<{ fileId: string }>;
+  @Prop({ type: Buffer, required: true })
+  buffer: Buffer;
+
+  @Prop({ type: Number, required: true })
+  fileSize: number;
 
   @Prop({ type: Date })
   createdAt: DateTimeISO;
@@ -28,4 +31,4 @@ export class Analysis {
   updatedAt: DateTimeISO;
 }
 
-export const AnalysisSchema = SchemaFactory.createForClass(Analysis);
+export const FileSchema = SchemaFactory.createForClass(File);
