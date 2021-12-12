@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AnalyzesService } from './analyzes.service';
+import { AnalysisService } from './analysis.service';
 import { Analysis, AnalysisDocument } from './entities/analysis.entity';
 import { Model } from 'mongoose';
 import { getModelToken } from '@nestjs/mongoose';
@@ -11,13 +11,13 @@ const mockAnalysis: Partial<AnalysisDocument> = {
 };
 
 describe('AnalyzesService', () => {
-  let service: AnalyzesService;
+  let service: AnalysisService;
   let model: Model<AnalysisDocument>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AnalyzesService,
+        AnalysisService,
         {
           provide: getModelToken(Analysis.name),
           useValue: {
@@ -31,7 +31,7 @@ describe('AnalyzesService', () => {
       ],
     }).compile();
 
-    service = module.get<AnalyzesService>(AnalyzesService);
+    service = module.get<AnalysisService>(AnalysisService);
     model = module.get<Model<AnalysisDocument>>(getModelToken(Analysis.name));
   });
 

@@ -9,7 +9,7 @@ import { Uuidv4 } from './types';
 import { Analysis, AnalysisDocument } from './entities/analysis.entity';
 
 @Injectable()
-export class AnalyzesService {
+export class AnalysisService {
   constructor(
     @InjectModel(Analysis.name) private analysisModel: Model<AnalysisDocument>,
   ) {}

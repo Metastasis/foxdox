@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AnalyzesController } from './analyzes.controller';
-import { AnalyzesService } from './analyzes.service';
+import { AnalysisController } from './analysis.controller';
+import { AnalysisService } from './analysis.service';
 import { CreateAnalysisDto } from './dto/create-analyze.dto';
 
 describe('AnalyzesController', () => {
-  let controller: AnalyzesController;
-  let service: AnalyzesService;
+  let controller: AnalysisController;
+  let service: AnalysisService;
   const createAnalysisDto: CreateAnalysisDto = {
     title: 'The analysis',
     bioMaterialExtractionDate: new Date(Date.UTC(2021, 2, 10, 13, 0, 0, 0)),
@@ -20,10 +20,10 @@ describe('AnalyzesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [AnalyzesController],
+      controllers: [AnalysisController],
       providers: [
         {
-          provide: AnalyzesService,
+          provide: AnalysisService,
           useValue: {
             create: jest.fn().mockResolvedValue(createAnalysisDto),
           },
@@ -31,8 +31,8 @@ describe('AnalyzesController', () => {
       ],
     }).compile();
 
-    controller = module.get<AnalyzesController>(AnalyzesController);
-    service = module.get<AnalyzesService>(AnalyzesService);
+    controller = module.get<AnalysisController>(AnalysisController);
+    service = module.get<AnalysisService>(AnalysisService);
   });
 
   it('should be defined', () => {

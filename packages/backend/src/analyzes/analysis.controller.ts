@@ -12,7 +12,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AnalyzesService } from './analyzes.service';
+import { AnalysisService } from './analysis.service';
 import { CreateAnalysisDto } from './dto/create-analyze.dto';
 import { UpdateAnalysisDto } from './dto/update-analyze.dto';
 import { SearchDto } from './dto/search.dto';
@@ -20,9 +20,9 @@ import { Uuidv4 } from './types';
 import { FileService } from './file.service';
 
 @Controller('/api/analysis')
-export class AnalyzesController {
+export class AnalysisController {
   constructor(
-    private readonly analyzesService: AnalyzesService,
+    private readonly analyzesService: AnalysisService,
     private readonly fileService: FileService,
   ) {}
 

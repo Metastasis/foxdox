@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Analysis, AnalysisSchema } from './entities/analysis.entity';
 import { File, FileSchema } from './entities/file.entity';
-import { AnalyzesController } from './analyzes.controller';
-import { AnalyzesService } from './analyzes.service';
+import { AnalysisController } from './analysis.controller';
+import { AnalysisService } from './analysis.service';
 import { FileService } from './file.service';
 
 @Module({
@@ -13,7 +13,7 @@ import { FileService } from './file.service';
       { name: File.name, schema: FileSchema },
     ]),
   ],
-  controllers: [AnalyzesController],
-  providers: [AnalyzesService, FileService],
+  controllers: [AnalysisController],
+  providers: [AnalysisService, FileService],
 })
 export class AnalyzesModule {}
