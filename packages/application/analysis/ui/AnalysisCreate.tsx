@@ -47,7 +47,8 @@ export default function AnalysisCreate() {
         <TextField
           required
           name="title"
-          label="Анализ"
+          label="Название"
+          placeholder="Биохимический анализ крови"
           size="medium"
           sx={{
             marginTop: (theme) => theme.spacing(2)
@@ -57,13 +58,16 @@ export default function AnalysisCreate() {
         />
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
           <DatePicker
-            label="Дата сдачи"
+            label="Когда сдан"
             mask="__.__.____"
             value={date}
-            onChange={(newValue) => setDate(newValue)}
+            onChange={setDate}
             renderInput={(params) => (
               <TextField
                 {...params}
+                inputProps={{
+                  placeholder: 'дд.мм.гггг'
+                }}
                 required
                 size="medium"
                 sx={{

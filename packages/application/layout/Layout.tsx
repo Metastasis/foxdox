@@ -16,6 +16,9 @@ export default function getLayout(page: ReactElement): ReactNode {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8}>
+            test
+          </Grid>
+          <Grid item xs={12} sm={8}>
             {page}
           </Grid>
         </Grid>
