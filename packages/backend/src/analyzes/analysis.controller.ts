@@ -8,14 +8,15 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  Res,
   HttpStatus,
   HttpException,
+  StreamableFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
 import { AnalysisService } from './analysis.service';
-import { CreateAnalysisDto } from './dto/create-analyze.dto';
-import { UpdateAnalysisDto } from './dto/update-analyze.dto';
-import { SearchDto } from './dto/search.dto';
+import { SearchDto, UpdateAnalysisDto, CreateAnalysisDto } from './dto';
 import { Uuidv4 } from './types';
 import { FileService } from './file.service';
 
@@ -51,7 +52,7 @@ export class AnalysisController {
     return this.analyzesService.remove(id);
   }
 
-  @Post('upload')
+  @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
   upload(@UploadedFile() file: Express.Multer.File) {
     if (file.mimetype !== 'application/pdf') {
@@ -64,5 +65,19 @@ export class AnalysisController {
       fileSize: file.size,
     };
     return this.fileService.upload(mappedFile);
+  }
+
+  @Get('/download/:fileId')
+  async download(
+    @Param('fileId') fileId: string,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const file = await this.fileService.download({ fileId });
+    if (!file) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    res.set({
+      'Content-Type': file.fileType,
+      'Content-Disposition': `attachment; filename="${file.fileName}"`,
+    });
+    return new StreamableFile(file.buffer);
   }
 }

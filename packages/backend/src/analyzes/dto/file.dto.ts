@@ -1,6 +1,16 @@
-import { CreateFileDto } from './create-file.dto';
 import { FileDocument } from '../entities/file.entity';
 import { Uuidv4 } from '../types';
+
+export class CreateFileDto {
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  buffer: Buffer;
+}
+
+export class DownloadFileDto {
+  fileId: Uuidv4;
+}
 
 export class FrontFileDto {
   fileId: Uuidv4;

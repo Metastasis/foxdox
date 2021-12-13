@@ -1,10 +1,12 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateAnalysisDto } from './dto/create-analyze.dto';
-import { UpdateAnalysisDto } from './dto/update-analyze.dto';
-import { FrontAnalysisDto } from './dto/front-analysis.dto';
-import { SearchDto } from './dto/search.dto';
+import {
+  SearchDto,
+  FrontAnalysisDto,
+  UpdateAnalysisDto,
+  CreateAnalysisDto,
+} from './dto';
 import { Uuidv4 } from './types';
 import { Analysis, AnalysisDocument } from './entities/analysis.entity';
 

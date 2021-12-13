@@ -9,7 +9,7 @@ interface Props {
 export default function AnalysisDownload(props: Props) {
   const loadApi = useSwr(
     ['analysis-download', props.fileId],
-    () => downloadViaLink({fileId: props.fileId})
+    () => downloadViaLink({fileId: props.fileId}).then(() => window.close())
   );
   if (loadApi.error) {
     return (

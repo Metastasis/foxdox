@@ -56,7 +56,7 @@ export function downloadViaFormFile(params: {[key: string]: any}) {
 
 export function downloadViaLink(params: DownloadLinkParams) {
   const payload = fileParamsSchema.parse(params);
-  return axios.post('/api/analysis/download', payload, {responseType: 'blob'})
+  return axios.get(`/api/analysis/download/${payload.fileId}`, {responseType: 'blob'})
     .then(response => {
       const fileName = response.headers['content-disposition']?.split('"')[1] || `file-${Date.now()}`;
       const options = {type: response.headers['content-type'] || 'application/octet-stream'};
