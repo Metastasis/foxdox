@@ -5,3 +5,8 @@ https://docs.dapr.io/getting-started/install-dapr-cli/
 https://github.com/minio/minio-js
 https://github.com/minio/minio
 https://nextjs.org/
+https://strapi.io/
+https://www.ory.sh/
+https://www.ory.sh/kratos/docs/next/quickstart
+https://github.com/JulienTD/nestjs-kratos
+https://github.com/spa5k/kratos-next

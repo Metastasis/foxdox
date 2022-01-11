@@ -23,6 +23,8 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/mongoose": "^9.0.1",
     "@nestjs/platform-express": "^8.0.0",
+    "@ory/integrations": "^0.2.1",
+    "@ory/kratos-client": "^0.8.2-alpha.1",
     "fp-ts": "^2.11.5",
     "io-ts": "^2.2.16",
     "mongoose": "^6.0.14",
